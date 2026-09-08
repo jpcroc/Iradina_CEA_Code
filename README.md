@@ -20,9 +20,14 @@ See the test in TSiC.
 Main variables of Config.in are explained in the file.
 
 ##electronic stopping
-elstop.in is read with stopping_model=2. The first line indicates the number of subsequent lines of data (N). The N lines then give in energy in eV and stopping power in ev/nm.
+###stopping_model=0 is SRIM 2008.
 
-stopping_model=0 is SRIM 2008.
+###stopping_model=1 is DPASS formula (see NIMB 460, 19 (2019)
 
-stopping_model=1 is DPASS formula.
+###elstop.in is read with stopping_model=2.
+The file iss built as sequence of blocks, one block per element involved in the calculation, with the target elements then the projectile element, i;e. for Au in SiC, the first blcok is for Si, then C then Au.
+
+For each block, the first line indicates the number of subsequent lines of data (N). The subsequent N lines then give in energy in eV and stopping power in ev/nm for this element in the present target.
+
+this file has to be built or obtained from outside iradina.
 
