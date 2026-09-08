@@ -1,0 +1,89 @@
+# This makefile can be used to compile iradina cea (for corteo 4bit).
+
+# For Linux or UNIX systems it is recommended to use the gcc for compilation
+
+# On Windows using mingw32 or mingw64 is mandatory
+#   user have to install minGW... AND Git (to get rm, cp, uname etc. commands as Linux)
+#   https://sourceforge.net/projects/mingw-w64
+#   https://git-scm.com/download/win
+#   then if you can set path on C:\MinGW\bin... AND C:\Program Files\Git\usr\bin
+#   (something like that)
+#   This makefile really works on windows
+
+#Default:
+CC = gcc
+
+# 64 valid for C:\MinGW (cb) is225310
+BITS=64
+
+#select compiler by OS:
+OS := $(shell uname -s)
+
+# rm command under windows valid if git bash utils installed
+ifeq ($(OS),Linux)
+  CC=gcc
+  TNAME=iradina_linux$(BITS)
+else
+  #assume windows:
+  # CC=mingw32-gcc
+  CC=gcc
+  TNAME=iradina_mingw$(BITS)
+endif
+
+CFLAGS = -O1 -Wall -m$(BITS)
+LDFLAGS = -lm -m$(BITS)
+
+########################################
+# Notes on warning level:
+########################################
+# Using -Wall and -pedantic will return many warnings,
+# because of non-allowed comment styles in the codes.
+# I recommend using just -Wall. 
+
+########################################
+# Notes on the compiler optimization options -OX:
+########################################
+# It is not recommended to use -O2 or -O3.
+# On Linux systems no problems using these options have been observed so far;
+# however, on windows systems program crashes and hang-ups did occur when using -O2 or -O3.
+# The problems occurred in modules "transport.c" and "fromcorteo.c".
+# In windows, the inverse sqr tables will not work with -O2.
+# If unsure, compile all with -O1 only.
+
+########################################
+# Notes on 32/64 bit systems:
+# Since iradina version 1.0.6 native 64 bit compilation is possible.
+# If you want to build a 32bit version using a 64bit compiler, active the flag -m32.
+########################################
+
+iradina: clean iradina.o target.o fileio.o utils.o transport.o geometry.o fromcorteo.o
+	$(CC) -o $(TNAME).exe iradina.o target.o fileio.o utils.o transport.o geometry.o fromcorteo.o $(LDFLAGS)
+
+utils.o: utils.h utils.c
+
+target.o: target.h target.c
+
+iradina.o: iradina.h iradina.c
+
+fileio.o: fileio.h fileio.c
+
+transport.o: transport.h transport.c
+
+geometry.o: geometry.h geometry.c
+
+fromcorteo.o: fromcorteo.h fromcorteo.c
+#	gcc -lm -c -O1 -Wall fromcorteo.c fromcorteo.h
+
+.c.o :
+	$(CC) -c $< $(CFLAGS) $(LDFLAGS)
+
+clean:
+	rm -f $(TNAME).exe *.o
+
+# local install
+install:
+	cp -f $(TNAME).exe ../iradinaCode && ls -alt ../iradinaCode
+
+# iradinaGUI/iradinaCode install
+installGUI:
+	cp -f $(TNAME).exe ../iradinaCode && ls -alt ../iradinaCode

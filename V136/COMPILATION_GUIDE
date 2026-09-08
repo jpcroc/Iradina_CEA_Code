@@ -1,0 +1,17 @@
+starting version 133, the comilation of the iradina code is madeon linux
+to compile for linux
+use gcc with the makefile as it is
+>make clean ; make
+
+to compile for windows :
+1/install
+1.    Install a Cross-Compiler:
+ sudo apt-get install mingw-w64
+2. edit the makefile to change the value of $(CC)
+CC = x86_64-w64-mingw32-
+
+3.Compile as for linux :
+make clean ; make
+(this will do x86_64-w64-mingw32-gcc example.c -o example.exe)
+this will create a file iradina.exe which is to be renamed
+mv iradina.exe ../iradinaCode/iradina_mingw64.exe (the name is historic/legacy).

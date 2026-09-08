@@ -1,0 +1,8 @@
+#!/bin/csh
+foreach temp (`ls -1 *.h *.c`)
+	echo $temp
+	rm -f rd
+	diff   $temp ../V133/$temp > rd
+	if  ( -s  rd ) meld ../V133/$temp  $temp 
+
+end
