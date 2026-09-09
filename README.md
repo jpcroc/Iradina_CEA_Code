@@ -4,6 +4,8 @@
 ## What is it ?
 This is the latest source code of Iradina in its CEA's version. This version may be slightly ahead of the code compiled and ditributed in the GUI which in in sourceforge (https://sourceforge.net/projects/iradina/files/Iradina_CEA_GRAPHICAL_USER_INTERFACE/).
 
+This code originates in a development by the University of Jena. It has been pursued by French CEA and is GPL licensed https://www.gnu.org/licenses/gpl.html
+
 
 ##Special features
 This version implements 3 different electronic stopping power
