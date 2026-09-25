@@ -1,0 +1,15 @@
+# Material file for iradina test_UO2
+
+[UO2]
+IsVacuum=0
+ElementCount=2
+Density=7.34e+22
+ElementsZ=92,8
+ElementsM=238.0,16.0
+ElementsConc=0.333,0.667
+ElementsDispEnergy=40,20
+ElementsLattEnergy=4,2
+ElementsSurfEnergy=4,2
+ElementsReplEnergy=-1,-1
+IonSurfEnergy=0.0
+

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Iradina typeClass="ModelIra" treePyName="" icon="iradinapy.resources.iradinagui">
+  <Controls hidden="True" typeClass="ControlSimulationIra" treePyName=".Controls" icon="controlnmd">
+    <hostName typeClass="StrNoEditionXyz" treePyName=".Controls.hostName">     is231761</hostName>
+    <system typeClass="StrNoEditionXyz" treePyName=".Controls.system">        Linux</system>
+    <platform typeClass="StrNoEditionXyz" treePyName=".Controls.platform"> Linux-3.10.0-862.3.2.el7.x86_64-x86_64-with-centos-7.5.1804-Core</platform>
+  </Controls>
+  <Analysis typeClass="AnalysisIra" treePyName=".Analysis" icon="run">
+    <dataInformations typeClass="DataInformationsIra" treePyName=".Analysis.dataInformations" icon="datainformation">
+      <name typeClass="StrXyz" treePyName=".Analysis.dataInformations.name">     test_UO2</name>
+      <directory typeClass="DirectoryXyz" treePyName=".Analysis.dataInformations.directory"> ${IRADINAGUI_WORKDIR}</directory>
+      <release hidden="True" typeClass="ReleaseXyz" treePyName=".Analysis.dataInformations.release">        1.0.0</release>
+    </dataInformations>
+    <caseIradina typeClass="CaseIra" treePyName=".Analysis.caseIradina" icon="caseira">
+      <IonBeam typeClass="IonBeamIra" treePyName=".Analysis.caseIradina.IonBeam" icon="ionbeamira">
+        <ion typeClass="IsotopeIra" treePyName=".Analysis.caseIradina.IonBeam.ion" icon="isotopedrt">
+          <symbolElement typeClass="StrSymbolIsotopeDrt" treePyName=".Analysis.caseIradina.IonBeam.ion.symbolElement" tooltip_1="Xenon - Xenon">           Xe</symbolElement>
+          <isotopeNumero typeClass="StrXyz" treePyName=".Analysis.caseIradina.IonBeam.ion.isotopeNumero">          133</isotopeNumero>
+          <atomicNumber typeClass="AtomicNumberDrt" treePyName=".Analysis.caseIradina.IonBeam.ion.atomicNumber">           54</atomicNumber>
+          <atomicWeight typeClass="FloatPosXyz" treePyName=".Analysis.caseIradina.IonBeam.ion.atomicWeight">  1.31290e+02</atomicWeight>
+        </ion>
+        <ionE0 typeClass="IonE0Ira" treePyName=".Analysis.caseIradina.IonBeam.ionE0">  3.90000e+02</ionE0>
+        <ion_angle_xy typeClass="IonAngleIra" treePyName=".Analysis.caseIradina.IonBeam.ion_angle_xy" tooltip_1="ion_vx = 1.000
+ion_vy = 0.000">            0</ion_angle_xy>
+        <ion_distribution hidden="True" typeClass="IonDistributionIra" treePyName=".Analysis.caseIradina.IonBeam.ion_distribution"> (1) Centered</ion_distribution>
+        <enter_x hidden="True" typeClass="FloatPosXyz" treePyName=".Analysis.caseIradina.IonBeam.enter_x">  0.00000e+00</enter_x>
+        <enter_y hidden="True" typeClass="FloatPosXyz" treePyName=".Analysis.caseIradina.IonBeam.enter_y">  0.00000e+00</enter_y>
+        <enter_z hidden="True" typeClass="FloatPosXyz" treePyName=".Analysis.caseIradina.IonBeam.enter_z">  0.00000e+00</enter_z>
+        <beam_spread hidden="True" typeClass="BeamSpreadIra" treePyName=".Analysis.caseIradina.IonBeam.beam_spread">  1.00000e+00</beam_spread>
+      </IonBeam>
+      <Target typeClass="TargetIra" treePyName=".Analysis.caseIradina.Target" icon="targetira">
+        <straggling_model hidden="True" typeClass="StragglingModelIra" treePyName=".Analysis.caseIradina.Target.straggling_model"> (3) Chu + Yang correction [NIMB 61 (1991) 149]</straggling_model>
+        <Materials typeClass="ListOfMaterialIra" treePyName=".Analysis.caseIradina.Target.Materials" icon="listmaterialira" size="1">
+          <MaterialIra typeClass="MaterialIra" treePyName=".Analysis.caseIradina.Target.Materials[0]" icon="materialira" index="0">
+            <name typeClass="MaterialNameIra" treePyName=".Analysis.caseIradina.Target.Materials[0].name">          UO2</name>
+            <IsVacuum hidden="True" typeClass="BoolFalseIra" treePyName=".Analysis.caseIradina.Target.Materials[0].IsVacuum">        False</IsVacuum>
+            <TargetConcentration hidden="True" typeClass="ConcentrationIra" treePyName=".Analysis.caseIradina.Target.Materials[0].TargetConcentration">  1.00000e+00</TargetConcentration>
+            <Density typeClass="DensityIra" treePyName=".Analysis.caseIradina.Target.Materials[0].Density" tooltip_1="7.34e+22 (at/cm3)">  1.09700e+01</Density>
+            <IonSurfEnergy hidden="True" typeClass="FloatPosXyz" treePyName=".Analysis.caseIradina.Target.Materials[0].IonSurfEnergy">  0.00000e+00</IonSurfEnergy>
+            <Components typeClass="ListOfTargetComponentsIra" treePyName=".Analysis.caseIradina.Target.Materials[0].Components" icon="listtargetcomponentsdrt" size="2">
+              <TargetComponent typeClass="TargetComponentIra" treePyName=".Analysis.caseIradina.Target.Materials[0].Components[0]" icon="targetcomponentdrt" index="0">
+                <Component typeClass="IsotopeIra" treePyName=".Analysis.caseIradina.Target.Materials[0].Components[0].Component" icon="isotopedrt">
+                  <symbolElement typeClass="StrSymbolIsotopeDrt" treePyName=".Analysis.caseIradina.Target.Materials[0].Components[0].Component.symbolElement" tooltip_1="Uranium">            U</symbolElement>
+                  <isotopeNumero typeClass="StrXyz" treePyName=".Analysis.caseIradina.Target.Materials[0].Components[0].Component.isotopeNumero">          238</isotopeNumero>
+                  <atomicNumber typeClass="AtomicNumberDrt" treePyName=".Analysis.caseIradina.Target.Materials[0].Components[0].Component.atomicNumber">           92</atomicNumber>
+                  <atomicWeight typeClass="FloatPosXyz" treePyName=".Analysis.caseIradina.Target.Materials[0].Components[0].Component.atomicWeight">  2.38000e+02</atomicWeight>
+                </Component>
+                <Density hidden="True" typeClass="DensityTargetComponentIra" treePyName=".Analysis.caseIradina.Target.Materials[0].Components[0].Density">  1.90000e+01</Density>
+                <ElementConc typeClass="ConcentrationIra" treePyName=".Analysis.caseIradina.Target.Materials[0].Components[0].ElementConc">  1.00000e+00</ElementConc>
+                <ElementDispEnergy typeClass="FloatPosXyz" treePyName=".Analysis.caseIradina.Target.Materials[0].Components[0].ElementDispEnergy">  4.00000e+01</ElementDispEnergy>
+                <ElementLattEnergy typeClass="FloatPosXyz" treePyName=".Analysis.caseIradina.Target.Materials[0].Components[0].ElementLattEnergy">  4.00000e+00</ElementLattEnergy>
+                <ElementSurfEnergy typeClass="FloatPosXyz" treePyName=".Analysis.caseIradina.Target.Materials[0].Components[0].ElementSurfEnergy">  4.00000e+00</ElementSurfEnergy>
+                <ElementReplEnergy hidden="True" typeClass="ElementReplEnergyIra" treePyName=".Analysis.caseIradina.Target.Materials[0].Components[0].ElementReplEnergy"> -1.00000e+00</ElementReplEnergy>
+              </TargetComponent>
+              <TargetComponent typeClass="TargetComponentIra" treePyName=".Analysis.caseIradina.Target.Materials[0].Components[1]" icon="targetcomponentdrt" index="1">
+                <Component typeClass="IsotopeIra" treePyName=".Analysis.caseIradina.Target.Materials[0].Components[1].Component" icon="isotopedrt">
+                  <symbolElement typeClass="StrSymbolIsotopeDrt" treePyName=".Analysis.caseIradina.Target.Materials[0].Components[1].Component.symbolElement" tooltip_1="Oxygen - Oxygene">            O</symbolElement>
+                  <isotopeNumero typeClass="StrXyz" treePyName=".Analysis.caseIradina.Target.Materials[0].Components[1].Component.isotopeNumero">           16</isotopeNumero>
+                  <atomicNumber typeClass="AtomicNumberDrt" treePyName=".Analysis.caseIradina.Target.Materials[0].Components[1].Component.atomicNumber">            8</atomicNumber>
+                  <atomicWeight typeClass="FloatPosXyz" treePyName=".Analysis.caseIradina.Target.Materials[0].Components[1].Component.atomicWeight">  1.60000e+01</atomicWeight>
+                </Component>
+                <Density hidden="True" typeClass="DensityTargetComponentIra" treePyName=".Analysis.caseIradina.Target.Materials[0].Components[1].Density">  3.00000e+00</Density>
+                <ElementConc typeClass="ConcentrationIra" treePyName=".Analysis.caseIradina.Target.Materials[0].Components[1].ElementConc">  2.00000e+00</ElementConc>
+                <ElementDispEnergy typeClass="FloatPosXyz" treePyName=".Analysis.caseIradina.Target.Materials[0].Components[1].ElementDispEnergy">  2.00000e+01</ElementDispEnergy>
+                <ElementLattEnergy typeClass="FloatPosXyz" treePyName=".Analysis.caseIradina.Target.Materials[0].Components[1].ElementLattEnergy">  2.00000e+00</ElementLattEnergy>
+                <ElementSurfEnergy typeClass="FloatPosXyz" treePyName=".Analysis.caseIradina.Target.Materials[0].Components[1].ElementSurfEnergy">  2.00000e+00</ElementSurfEnergy>
+                <ElementReplEnergy hidden="True" typeClass="ElementReplEnergyIra" treePyName=".Analysis.caseIradina.Target.Materials[0].Components[1].ElementReplEnergy"> -1.00000e+00</ElementReplEnergy>
+              </TargetComponent>
+            </Components>
+          </MaterialIra>
+        </Materials>
+        <Structure typeClass="StructureIra" treePyName=".Analysis.caseIradina.Target.Structure" icon="structureira">
+          <typeComposition typeClass="TypeCompositionIra" treePyName=".Analysis.caseIradina.Target.Structure.typeComposition"> homogenous one material</typeComposition>
+          <cell_multiLayer_x hidden="True" typeClass="CellMultiLayerxIra" treePyName=".Analysis.caseIradina.Target.Structure.cell_multiLayer_x">       2(abc)</cell_multiLayer_x>
+          <seedComposition hidden="True" typeClass="SeedIra" treePyName=".Analysis.caseIradina.Target.Structure.seedComposition">            0</seedComposition>
+          <cell_count_x typeClass="CellCountxIra" treePyName=".Analysis.caseIradina.Target.Structure.cell_count_x">          250</cell_count_x>
+          <cell_count_y hidden="True" typeClass="CellCountyIra" treePyName=".Analysis.caseIradina.Target.Structure.cell_count_y">            1</cell_count_y>
+          <cell_count_z hidden="True" typeClass="CellCountzIra" treePyName=".Analysis.caseIradina.Target.Structure.cell_count_z">            1</cell_count_z>
+          <total_depth_x typeClass="CellDepthxIra" treePyName=".Analysis.caseIradina.Target.Structure.total_depth_x" tooltip_1="implies cell_size_x = 1.000">  2.50000e+02</total_depth_x>
+          <cell_size_y hidden="True" typeClass="CellSizeyIra" treePyName=".Analysis.caseIradina.Target.Structure.cell_size_y">  1.00000e+03</cell_size_y>
+          <cell_size_z hidden="True" typeClass="CellSizezIra" treePyName=".Analysis.caseIradina.Target.Structure.cell_size_z">  1.00000e+03</cell_size_z>
+          <periodic_boundary_x hidden="True" typeClass="BoolFalseIra" treePyName=".Analysis.caseIradina.Target.Structure.periodic_boundary_x">        False</periodic_boundary_x>
+          <periodic_boundary_y hidden="True" typeClass="BoolTrueIra" treePyName=".Analysis.caseIradina.Target.Structure.periodic_boundary_y">         True</periodic_boundary_y>
+          <periodic_boundary_z hidden="True" typeClass="BoolTrueIra" treePyName=".Analysis.caseIradina.Target.Structure.periodic_boundary_z">         True</periodic_boundary_z>
+          <CompositionFileType hidden="True" typeClass="CompositionFileTypeIra" treePyName=".Analysis.caseIradina.Target.Structure.CompositionFileType"> (0) 4 columns (x, y, z, value)</CompositionFileType>
+          <UseDensityMultiplicator hidden="True" typeClass="BoolFalseIra" treePyName=".Analysis.caseIradina.Target.Structure.UseDensityMultiplicator">        False</UseDensityMultiplicator>
+          <special_geometry hidden="True" typeClass="BoolFalseIra" treePyName=".Analysis.caseIradina.Target.Structure.special_geometry">        False</special_geometry>
+        </Structure>
+      </Target>
+      <Simulation typeClass="SimulationIra" treePyName=".Analysis.caseIradina.Simulation" icon="simulationira">
+        <launch_in_background hidden="True" typeClass="BoolFalseIra" treePyName=".Analysis.caseIradina.Simulation.launch_in_background">        False</launch_in_background>
+        <max_no_ions typeClass="MaxNoIonIra" treePyName=".Analysis.caseIradina.Simulation.max_no_ions">          500</max_no_ions>
+        <display_interval hidden="True" typeClass="DisplayIntervalIra" treePyName=".Analysis.caseIradina.Simulation.display_interval">         1000</display_interval>
+        <storage_interval hidden="True" typeClass="StorageIntervalIra" treePyName=".Analysis.caseIradina.Simulation.storage_interval">         2000</storage_interval>
+        <status_update_interval hidden="True" typeClass="StatusUpdateIntervalIra" treePyName=".Analysis.caseIradina.Simulation.status_update_interval">        10000</status_update_interval>
+        <store_joined_output hidden="True" typeClass="BoolFalseIra" treePyName=".Analysis.caseIradina.Simulation.store_joined_output">        False</store_joined_output>
+        <store_transmitted_ions hidden="True" typeClass="BoolFalseIra" treePyName=".Analysis.caseIradina.Simulation.store_transmitted_ions">        False</store_transmitted_ions>
+        <store_exiting_recoils hidden="True" typeClass="BoolFalseIra" treePyName=".Analysis.caseIradina.Simulation.store_exiting_recoils">        False</store_exiting_recoils>
+        <store_exiting_limit hidden="True" typeClass="IntPosXyz" treePyName=".Analysis.caseIradina.Simulation.store_exiting_limit">            0</store_exiting_limit>
+        <store_energy_deposit typeClass="BoolFalseIra" treePyName=".Analysis.caseIradina.Simulation.store_energy_deposit">        False</store_energy_deposit>
+        <store_ion_paths typeClass="BoolFalseIra" treePyName=".Analysis.caseIradina.Simulation.store_ion_paths">        False</store_ion_paths>
+        <store_recoil_cascades hidden="True" typeClass="BoolFalseIra" treePyName=".Analysis.caseIradina.Simulation.store_recoil_cascades">        False</store_recoil_cascades>
+        <store_path_limit hidden="True" typeClass="StorePathLimitIra" treePyName=".Analysis.caseIradina.Simulation.store_path_limit">           50</store_path_limit>
+        <store_path_limit_recoils hidden="True" typeClass="StorePathLimitRecoilsIra" treePyName=".Analysis.caseIradina.Simulation.store_path_limit_recoils">           -1</store_path_limit_recoils>
+        <simulation_type typeClass="SimulationTypeIra" treePyName=".Analysis.caseIradina.Simulation.simulation_type"> (0) Full cascade Er=Elatt</simulation_type>
+        <stopping_model typeClass="StoppingModelIra" treePyName=".Analysis.caseIradina.Simulation.stopping_model"> (1) DPASS Se</stopping_model>
+        <flight_length_type typeClass="FlightLengthTypeIra" treePyName=".Analysis.caseIradina.Simulation.flight_length_type"> (0) Poisson distributed flight length and impact pars</flight_length_type>
+        <flight_length_constant hidden="True" typeClass="FlightLengthConstantIra" treePyName=".Analysis.caseIradina.Simulation.flight_length_constant">  1.00000e+00</flight_length_constant>
+        <detailed_sputtering hidden="True" typeClass="BoolFalseIra" treePyName=".Analysis.caseIradina.Simulation.detailed_sputtering">        False</detailed_sputtering>
+        <min_energy hidden="True" typeClass="MinEnergyIra" treePyName=".Analysis.caseIradina.Simulation.min_energy">  1.00000e+00</min_energy>
+        <seed1 hidden="True" typeClass="IntSupEq1Xyz" treePyName=".Analysis.caseIradina.Simulation.seed1">          789</seed1>
+        <seed2 hidden="True" typeClass="IntSupEq1Xyz" treePyName=".Analysis.caseIradina.Simulation.seed2">          101</seed2>
+        <normalize_output hidden="True" typeClass="NormalizeOutputIra" treePyName=".Analysis.caseIradina.Simulation.normalize_output"> (1) units of (1/cm3) per (ions/cm2) V1 (see tooltip)</normalize_output>
+        <ion_dose typeClass="IonDoseIra" treePyName=".Analysis.caseIradina.Simulation.ion_dose"> -1.00000e+00</ion_dose>
+        <dpa_output typeClass="BoolFalseIra" treePyName=".Analysis.caseIradina.Simulation.dpa_output">        False</dpa_output>
+        <transport_type hidden="True" typeClass="BoolTrueIra" treePyName=".Analysis.caseIradina.Simulation.transport_type">         True</transport_type>
+        <multiple_collisions hidden="True" typeClass="BoolFalseIra" treePyName=".Analysis.caseIradina.Simulation.multiple_collisions">        False</multiple_collisions>
+        <scattering_calculation hidden="True" typeClass="BoolFalseIra" treePyName=".Analysis.caseIradina.Simulation.scattering_calculation">        False</scattering_calculation>
+        <do_not_store_damage hidden="True" typeClass="BoolFalseIra" treePyName=".Analysis.caseIradina.Simulation.do_not_store_damage">        False</do_not_store_damage>
+        <no_headers_in_files hidden="True" typeClass="BoolFalseIra" treePyName=".Analysis.caseIradina.Simulation.no_headers_in_files">        False</no_headers_in_files>
+        <store_range3d hidden="True" typeClass="BoolFalseIra" treePyName=".Analysis.caseIradina.Simulation.store_range3d">        False</store_range3d>
+        <store_info_file hidden="True" typeClass="BoolTrueIra" treePyName=".Analysis.caseIradina.Simulation.store_info_file">         True</store_info_file>
+      </Simulation>
+      <Variables hidden="True" typeClass="VariablesInterpreterPythonXyz" treePyName=".Analysis.caseIradina.Variables" icon="python">
+        <MyFirstVar typeClass="VariablePythonXyz" treePyName=".Analysis.caseIradina.Variables.MyFirstVar"> 0.3333333333333333</MyFirstVar>
+        <X__source__ hidden="True" typeClass="VariablePythonXyz" treePyName=".Analysis.caseIradina.Variables.X__source__"> ##############################################
+# initial default example code source python #
+# you are free to modify at your convenience #
+##############################################
+
+#ever floating mode for division
+from __future__ import division
+
+MyFirstVar = 1/3   # is an example...
+
+#... etc ...</X__source__>
+      </Variables>
+    </caseIradina>
+  </Analysis>
+</Iradina>

@@ -1,0 +1,24 @@
+[Simulation]
+ions_simulated=500
+cmd_line_override_number_of_ions=0
+cmd_line_override_ion_energy=0
+ion_energy=390000
+simulation_start=2026-09-25_11:33:33
+results_stored__=2026-09-25_11:33:34
+
+[iradina]
+version=1.2.3
+release= 
+comment=  
+versiondate=2019-AUG-23
+compiledate=Sep 25 2026
+compiletime=11:12:11
+iradina_type=normal
+pointersize=64
+compiled_options=SAFE_SQR_ROTATION,RENORM_VELOCITIES,INDEX_BOUND_CHECKING,
+proj_hangup_safety=100000000
+
+[Lookup_tables]
+energy_mantissa_bits=4
+red_impact_par_mantissa_bits=4
+e_stop_mantissa_bits=4

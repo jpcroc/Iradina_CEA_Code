@@ -1,0 +1,169 @@
+0
+
+  _               _ _             
+ (_)             | (_)            
+  _ _ __ __ _  __| |_ _ __   __ _ 
+ | | '__/ _` |/ _` | | '_ \ / _` |
+ | | | | (_| | (_| | | | | | (_| |
+ |_|_|  \__,_|\__,_|_|_| |_|\__,_|
+
+This is iradina version 1.2.3  , 2019-AUG-23
+  
+by C. Borschel, 2019
+Institute for Solid State Physics, University of Jena
+
+This program comes with ABSOLUTELY NO WARRANTY.
+This is free software, and you are welcome to redistribute it under certain conditions,
+see license.txt for details.
+
+KP additions by JP.Crocombette (cea).
+Compiled code on Sep 25 2026 at 11:12:10 by croc.
+
+Current time: Fri Sep 25 11:35:17 2026
+
+ion beam Z:			 54
+ion beam M:			 131.29 amu
+ion beam E_0:			 390000 eV
+ion beam vx:			 1
+ion beam vy:			 0
+ion beam vz:			 0
+Ion entry distribution model:	 1.
+Entry point x:			 0 nm
+Entry point y:			 0 nm
+Entry point z:			 0 nm
+Beam spread:			 1 nm
+Max number of ions:		 500
+Dose:			 -1 
+Show ion number every 		 1000 ions.
+Store results every 		 2000 ions.
+Write status file every 		 10000 ions.
+Storing transmitted ions?	 0
+Storing exiting recoils?	 0
+Max. exiting recoils:		0
+Detailed energy deposition:	 0
+Storing ions paths?		 0
+Storing exact recoils cascades?	 0
+Store paths or cascades only until ion 50.
+Store cascades only until ion -1.
+Simulation type:		 0
+Stopping model is:		 1
+Flight length distribution model:0
+Flight length:			 1 nm
+Detailed sputtering:		 0
+Minimum projectile energy:	 1 eV
+Random seed 1 set to:		 789.
+Random seed 2 set to:		 101.
+Normalize Output :		 1 
+dpa output :		 0 
+transport_type:			 1 
+Multiple collisions :		 0 
+scattering_calculation:		 0 
+Do not store damage:		 0 
+no headers in file:		 0 
+Storing final ion positions?	 0
+Store information on simulation?	 1
+Straggling model is:		 3
+Configuration read from ./Configuration.in.
+No storing limit for recoil cascades defined. Set to limit for ion paths: 50
+Open ../data/corteo.mat
+----- Header elements 0 (header 1.9073e-06 and 1.9073e-06 expected)
+----- Header elements 1 (header 6.4000e+02 and 6.4000e+02 expected)
+----- Header elements 2 (header 2.0972e+06 and 2.0972e+06 expected)
+----- Header elements 3 (header 1.4901e-08 and 1.4901e-08 expected)
+----- Header elements 4 (header 5.1200e+02 and 5.1200e+02 expected)
+----- Header elements 5 (header 6.4000e+01 and 6.4000e+01 expected)
+----- Header elements 6 (header 1.0000e+03 and 1.0000e+03 expected)
+----- Header elements correspond to current parameters in corteo.mat
+Corteo scattering matrix loaded.
+Lists of random numbers generated.
+Open ../data/chu.dat
+Chu's straggling data read.
+Open ../data/erfinv.dat
+Inverse Erf list read.
+Inverse Erf list randomized.
+
+New material declared:	UO2
+Number of elements:	2
+Density:		7.34e+22
+Ion SBE:		0
+No replacement threshold defined for material 0, element 0. Use lattice energy as default: 4.000000 eV
+No replacement threshold defined for material 0, element 1. Use lattice energy as default: 2.000000 eV
+STOPPINGMODEL: 1
+Open ../data/1.asp
+Open ../data/8.asp
+Open ../data/54.asp
+Open ../data/92.asp
+Straggling model 3
+Prepare scattering matrices for ion on target collisions... finished
+Prepare scattering matrices for recoil on target collisions... finished
+Materials read from ./Materials.in.
+Initializing target.
+Target structure definition file: ./Structure.in
+
+Target size is: 
+x: 250 cells, 1 nm per cell, 250 nm in total.
+y: 1 cells, 1000 nm per cell, 1000 nm in total.
+z: 1 cells, 1000 nm per cell, 1000 nm in total.
+Total: 250 cells in 2.5e+08 nm^3.
+Memory for target arrays has been allocated.
+
+Target composition read from ./Composition.in.
+Material 0 found in 250 cells.
+Target structure read from ./Structure.in.
+ion_dose 1
+Normalization factor:	20000
+0
+
+Everything is initialized and ready.
+-----------------------------------------------
+
+Starting simulation of irradiation...
+ion_dose 1
+Normalization factor is: 20000
+Ions completed: 0
+Ion paths are no longer stored after 50 ions.
+Recoil cascades are no longer stored after 50 ions.
+Counters:
+	Ions:		500
+	Disp:		1571043
+	Missed:		1258613
+	Coll:		20467819
+	Repl:		51434
+	Vacs:		0
+	Ints:		0
+	Ions left:	0
+	Recoils left:	0
+	Escaped solid:	0
+	Repl.escaped:	0
+	Atoms lost via vacuum (simplistic sputtering):	0
+
+Simulation is finished.
+-----------------------------------------------
+Storing final results: ...
+ ion_dose 1
+Storing additional information to: output/ira.information
+Maximum concentration of implanted ions :   240000
+Maximum concentration of vacancies :   4.4322e+08
+Storing implanted ions to:      output/ira.ions.total
+Storing implanted replacing ions to:   output/ira.ions.replacements
+Storing total vacancies to: output/ira.vac.sum
+normalize_output 2
+Normalization factor:	20000
+Storing total displacements to: output/ira.disp.sum
+Storing sum of recoiled interstitials:   output/ira.int.sum
+Storing sum of recoiled replacements:   output/ira.repl.sum
+Storing implanted ions and vacancies:   output/ira.ions_vac
+Storing for material 0, elem 0:
+ Recoil interstitials to output/ira.int.z92.m238.000.mat0.elem0
+ Recoil replacements to output/ira.repl.z92.m238.000.mat0.elem0
+ Vacancies to     output/ira.vac.z92.m238.000.mat0.elem0
+ Displacements to   output/ira.disp.z92.m238.000.mat0.elem0
+Storing for material 0, elem 1:
+ Recoil interstitials to output/ira.int.z8.m16.000.mat0.elem1
+ Recoil replacements to output/ira.repl.z8.m16.000.mat0.elem1
+ Vacancies to     output/ira.vac.z8.m16.000.mat0.elem1
+ Displacements to   output/ira.disp.z8.m16.000.mat0.elem1
+Storing cell-independent results...
+ Storing sum of leaving ions to:        output/ira.leaving_directions.ions
+done.
+

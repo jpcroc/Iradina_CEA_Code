@@ -1,0 +1,18 @@
+# Structure file for iradina test_UO2
+
+[Target]
+cell_count_x=250
+cell_count_y=1
+cell_count_z=1
+cell_size_x=1.0
+cell_size_y=1000.0
+cell_size_z=1000.0
+periodic_boundary_x=0
+periodic_boundary_y=1
+periodic_boundary_z=1
+CompositionFileType=0
+CompositionFileName=./Composition.in
+UseDensityMultiplicator=0
+DensityMultiplicatorFileName=none
+special_geometry=0
+
