@@ -427,7 +427,7 @@ int FastProjectileTransport(int ProjZ, float ProjM, double ProjE, float Proj_x, 
   /*CROC: if from inside bulk cascade the initial site is a vacancy! */
   if (ion_distribution==4){
     if(is_ion==1){
-      if(store_range3d==2){fprintf(store_range3dV_fp,"%g\t%g\t%g\n",x,y,z);}             
+      if(store_range3d==2){fprintf(store_range3dV_fp,"%g\t%g\t%g\t%i\n",x,y,z,-1);}             
     }
   }
 	
@@ -501,6 +501,11 @@ int FastProjectileTransport(int ProjZ, float ProjM, double ProjE, float Proj_x, 
 	break;
       case 2:
 	stopping   = (flightpath ) * ElectronicStoppingfile(ProjZ,energy,current_material_index); 
+	break;
+      case 3: /* SRIM 2012 */
+      case 4: /* SRIM 2008 */
+      case 5: /* TRIM 1998 */
+	stopping   = flightpath * ElectronicStoppingSRIM(ProjZ,ProjM,energy,current_material_index); /* eV/nm */
 	break;
       default:
 	printf("wong electronic stopping_model\n");
@@ -895,14 +900,14 @@ int FastProjectileTransport(int ProjZ, float ProjM, double ProjE, float Proj_x, 
 		} else { /* The projectile has enough energy to leave site, a vacancy is created */
 		  ((current_material->TargetElementalVacancies)[target_index])[cell_i]+=1;
 		  /* CROC  store positions of vacancies*/
-		  if(store_range3d==2){fprintf(store_range3dV_fp,"%g\t%g\t%g\n",x,y,z);} 
+		  if(store_range3d==2){fprintf(store_range3dV_fp,"%g\t%g\t%g\t%i\n",x,y,z,target_index);} 
 		  /*		  ((current_material->TargetElementalVacancies)[target_index])[cell_i]+=1;*/
 		}
 	      } else { /* projectile and target not the same */
 		/* A vacancy is created in the target */
 		((current_material->TargetElementalVacancies)[target_index])[cell_i]+=1;
 		/* CROC  store positions of vacancy: */
-		if(store_range3d==2){fprintf(store_range3dV_fp,"%g\t%g\t%g\n",x,y,z);} 
+		if(store_range3d==2){fprintf(store_range3dV_fp,"%g\t%g\t%g\t%i\n",x,y,z,target_index);} 
 	      }
 	    } else { /* Recoil cannot be displaced, because e<e_comp, its energy goes into phonons (unless sputtered) */
 
@@ -991,13 +996,13 @@ int FastProjectileTransport(int ProjZ, float ProjM, double ProjE, float Proj_x, 
 	  /*CROC Interstitials and vacancies  are stored in store RANGE 3D V/I  and not only the ions */
 	  if(is_ion==1){ /* the ion comes to rest */
 	    if(replaced==0){
-	      if(store_range3d==2){fprintf(store_range3dI_fp,"%g\t%g\t%g\n",x,y,z);} 
+	      if(store_range3d==2){fprintf(store_range3dI_fp,"%g\t%g\t%g\t%i\n",x,y,z,-1);} 
 	    }
 	    if(store_range3d>=1){fprintf(store_range3d_fp,"%g\t%g\t%g\n",x,y,z);}
 	    TargetImplantedIons[cell_i]+=1;
 	  } else { /* a target atom stopped */
 	    if(replaced==0){ /* if it wasn't a replacement, it becomes interstitial, store as such */
-	      if(store_range3d==2){fprintf(store_range3dI_fp,"%g\t%g\t%g\n",x,y,z);} 
+	      if(store_range3d==2){fprintf(store_range3dI_fp, "%g\t%g\t%g\t%i\n",x,y,z,OrgElement);} 
 	      ((ListOfMaterials[OrgMaterial]).TargetImplantedRecoilsInt[OrgElement])[cell_i]+=1;
 	    } /* else: it was a replacement, so we do not need to store interstitial */
 	    if(store_recoil_cascades==1){ /* if cascades are to be stored, store empty line in file to separate record */
@@ -1871,11 +1876,13 @@ int FullProjectileTransport(int ProjZ, float ProjM, double ProjE, float Proj_x, 
 	  if(is_ion==1){                  /* its an ion that has to stop */
 	    TargetImplantedIons[new_cell]+=1;
 	    if(store_range3d>=1){fprintf(store_range3d_fp,"%g\t%g\t%g\n",x,y,z);}
+	    if(store_range3d==2){fprintf(store_range3dI_fp,"%g\t%g\t%g\t%i\n",x,y,z,-1);} 	
 	  } else {                        /* its a recoil that has to stop */
 	    if( (ProjState&1)==0){        /* projectile was not sub-threshold, so it was really displaced. It's allowed to become an interstitial */
 	      if(replaced==0){            /* replacing recoils are not counted as interstitials */
 		((ListOfMaterials[OrgMaterial]).TargetImplantedRecoilsInt[OrgElement])[new_cell]+=1;
 		int_c++;
+		if(store_range3d==2){fprintf(store_range3dI_fp,"%g\t%g\t%g\t%i\n",x,y,z,OrgElement);} 	
 	      }
 	    } else { /* It was sub-threshold: it jumps back to its original place, no interstitial created */
 	      /*if(replaced==1){

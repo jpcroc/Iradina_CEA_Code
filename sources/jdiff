@@ -2,7 +2,7 @@
 foreach temp (`ls -1 *.h *.c`)
 	echo $temp
 	rm -f rd
-	diff   $temp ../V133/$temp > rd
-	if  ( -s  rd ) meld ../V133/$temp  $temp 
+	diff   $temp /home/croc/BCA/iradina/V140/$temp > rd
+	if  ( -s  rd ) meld /home/croc/BCA/iradina/V140/$temp  $temp 
 
 end

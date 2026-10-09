@@ -104,8 +104,9 @@ struct material                             /* all properties of a material */
 	float** StoppingZE;                /* points to an array of 92 elements (the Zs) which contain pointers to logarithmically scaled stopping tables for Z in this material.*/  
 	float** StragglingZE;              /* We need the same for energy loss straggling */
 	struct transmitted_ion** ElementalLeavingRecoils; /* Arrays storing recoils that are leaving of each element */
-	int *leaving_recoils_pointer;      /* Array of pointers which for each element of this material point to next free leaving position */
-        int*  StoppingNLfile
+  int *leaving_recoils_pointer;      /* Array of pointers which for each element of this material point to next free leaving position */
+  int*  StoppingNLfile ;
+  !    bool  *StoppingFileRead;   /* true if the electronic table is read for the Z in this material is read in elstop.in (default calculation = all false */
 };
 struct material ListOfMaterials[MAX_NO_MATERIALS];
 int NumberOfMaterials;               /* Points to first free index in the ListOfMaterials */

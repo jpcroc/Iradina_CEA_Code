@@ -43,6 +43,7 @@
 #include "iradina.h"
 #include "target.h"
 #include "fromcorteo.h"
+#include "stopping_srim.h"   /* SRIM 2012 / SRIM 2008 / TRIM 1998 stopping (stopping_model 3,4,5) */
 
 
 #ifdef INCLUDE_SPECIAL_GEOMETRY

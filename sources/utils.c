@@ -1947,9 +1947,9 @@ int print_stopping_table(int ionZ, double ionM, int target, double e_min, double
     fprintf(elec_stopping_fp,"#NAME: %s \n", OutputFileBaseName,".elec_loss");
     fprintf(elec_stopping_fp,"#TITLE: Electronic Stopping Power \n");
     fprintf(elec_stopping_fp,"#DATE: %s", asctime(timeinfo) );
-    fprintf(elec_stopping_fp,"#COLUMN_NAMES: E | N1 | N2 | Eloss  \n");
-    fprintf(elec_stopping_fp,"#COLUMN_TITLES: Energy | N3 | N4| Stopping power \n");
-    fprintf(elec_stopping_fp,"#COLUMN_UNITS: eV | N5 | N6 | ev/nm \n");
+    fprintf(elec_stopping_fp,"#COLUMN_NAMES: E | Nothing | Nothing | Eloss  \n");
+    fprintf(elec_stopping_fp,"#COLUMN_TITLES: Energy | Nothing | Noyhing| Stopping power \n");
+    fprintf(elec_stopping_fp,"#COLUMN_UNITS: eV | Nothing | Nothing | ev/nm \n");
     fprintf(elec_stopping_fp,"#COLUMN_FACTOR: %i | %i | %i  | 1.0 \n", 1,1,1);
     fprintf(elec_stopping_fp," \n");
     //	fclose(elecfp);
@@ -1971,6 +1971,9 @@ int print_stopping_table(int ionZ, double ionM, int target, double e_min, double
       break;
     case(2) :
       stopping=ElectronicStoppingfile(ionZ, energy,target); /* factor 1, because flightpath is in nm */
+      break;
+    case(3) : case(4) : case(5) : /* SRIM 2012, SRIM 2008, TRIM 1998 */
+      stopping=ElectronicStoppingSRIM(ionZ,ionM, energy,target);
       break;
     }
 
@@ -1994,6 +1997,9 @@ int print_stopping_table(int ionZ, double ionM, int target, double e_min, double
       break;
     case(2) :
       stopping=ElectronicStoppingfile(ionZ, energy,target); /* factor 1, because flightpath is in nm */
+      break;
+    case(3) : case(4) : case(5) : /* SRIM 2012, SRIM 2008, TRIM 1998 */
+      stopping=ElectronicStoppingSRIM(ionZ,ionM, energy,target);
       break;
     }
 

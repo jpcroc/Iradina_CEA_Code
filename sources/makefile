@@ -38,8 +38,8 @@ LDFLAGS = -lm
 # If you want to build a 32bit version using a 64bit compiler, active the flag -m32 for the compiler and the linker.
 ########################################
 
-iradina : iradina.o target.o fileio.o utils.o transport.o geometry.o fromcorteo.o
-	$(CC) -o iradina iradina.o target.o fileio.o utils.o transport.o geometry.o fromcorteo.o $(LDFLAGS)
+iradina : iradina.o target.o fileio.o utils.o transport.o geometry.o fromcorteo.o stopping_srim.o
+	$(CC) -o iradina iradina.o target.o fileio.o utils.o transport.o geometry.o fromcorteo.o stopping_srim.o $(LDFLAGS)
 
 utils.o: utils.h utils.c
 
@@ -50,6 +50,8 @@ iradina.o: iradina.h iradina.c
 fileio.o: fileio.h fileio.c
 
 transport.o: transport.h transport.c
+
+stopping_srim.o: stopping_srim.c stopping_srim.h
 
 geometry.o: geometry.h geometry.c
 

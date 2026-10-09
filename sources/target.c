@@ -163,6 +163,11 @@ int InitializeMaterials(char* Filename){
       case 1:
 	result=PrepareStoppingTablesdpass();
 	break;
+      case 3: /* SRIM 2012 */
+      case 4: /* SRIM 2008 */
+      case 5: /* TRIM 1998 */
+	result=PrepareStoppingTablesSRIM(stopping_model);
+	break;
       case 2:
       if (flag==1){
       existing_elements[1]=0;    /* hydrogen stopping is needed to calculate charge state */
