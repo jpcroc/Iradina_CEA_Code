@@ -41,6 +41,12 @@
 
 #include "transport.h"
 
+/* Returns 1 if a stopping table was read in elstop.in for projectile Z in the given material */
+static inline int HasFileStopping(int Z, int material){
+  bool *flags = ListOfMaterials[material].StoppingFileRead;
+  return (flags != NULL && Z >= 0 && Z < MAX_ELEMENT_NO && flags[Z]);
+}
+
 /* DJGPP will not link the program correctly under windows, because it doesn't know sqrtf.
    So we'll define it by using standard sqrt for doubles*/
 #ifdef DJGPP
@@ -492,25 +498,27 @@ int FastProjectileTransport(int ProjZ, float ProjM, double ProjE, float Proj_x, 
       /* printf("DEBUG transport.c: line %i  flight length %f, ad %f\n",__LINE__,flightpath,current_material->AtomicDistance); */
 			
       /* Calculate electronic stopping(+-straggling): */
-      switch (stopping_model) {
-        case 0:
+      if (HasFileStopping(ProjZ, current_material_index)) {
+	/* Table read in elstop.in for this (material, Z) pair: overrides stopping_model (eV/nm) */
+	stopping   = flightpath * ElectronicStoppingfile(ProjZ,energy,current_material_index);
+      } else {
+	switch (stopping_model) {
+	case 0:
 	  stopping   = (flightpath * 10.0) * ElectronicStopping(ProjZ,ProjM,energy,current_material_index); /* factor 10, because flightpath is in nm */
 	  break;
-      case 1:
-	stopping   = (flightpath * 1.0) * ElectronicStoppingdpass(ProjZ,ProjM,energy,current_material_index); 
-	break;
-      case 2:
-	stopping   = (flightpath ) * ElectronicStoppingfile(ProjZ,energy,current_material_index); 
-	break;
-      case 3: /* SRIM 2012 */
-      case 4: /* SRIM 2008 */
-      case 5: /* TRIM 1998 */
-	stopping   = flightpath * ElectronicStoppingSRIM(ProjZ,ProjM,energy,current_material_index); /* eV/nm */
-	break;
-      default:
-	printf("wong electronic stopping_model\n");
-	exit(1);
-	  }
+	case 1:
+	  stopping   = (flightpath * 1.0) * ElectronicStoppingdpass(ProjZ,ProjM,energy,current_material_index);
+	  break;
+	case 3: /* SRIM 2012 */
+	case 4: /* SRIM 2008 */
+	case 5: /* TRIM 1998 */
+	  stopping   = flightpath * ElectronicStoppingSRIM(ProjZ,ProjM,energy,current_material_index); /* eV/nm */
+	  break;
+	default:
+	  printf("wrong electronic stopping_model\n");
+	  exit(1);
+	}
+      }
 
       /* if (stopping_model==0){ */
       /* 	stopping   = (flightpath * 10.0) * ElectronicStopping(ProjZ,ProjM,energy,current_material_index); /\* factor 10, because flightpath is in nm *\/ */
@@ -527,8 +535,9 @@ int FastProjectileTransport(int ProjZ, float ProjM, double ProjE, float Proj_x, 
 	  straggling=stopping;
 	}
       }
-      /* The stopping tables have no values below 16 eV. Therefore, we do simple linear downscaling of electronic stopping below 16 eV. */
-      if(energy<16){ /* Experimental scaling down */
+      /* The stopping tables have no values below 16 eV. Therefore, we do simple linear downscaling of electronic stopping below 16 eV.
+	 Only for the default tables of stopping_model 0, not for tables read in elstop.in */
+      if(energy<16 && stopping_model==0 && !HasFileStopping(ProjZ, current_material_index)){ /* Experimental scaling down */
 	stopping*=(energy*0.0625);
 	straggling*=(energy*0.0625);
       }
@@ -2157,7 +2166,7 @@ float ElectronicStoppingfile(int ionZ, float E, int material){
   
   while (high - low > 1) {
     int mid = (low + high) / 2;
-    if (Epu < ListOfMaterials[material].Efile[ionZ][high])
+    if (Epu < ListOfMaterials[material].Efile[ionZ][mid])
       high = mid;
     else
       low = mid;

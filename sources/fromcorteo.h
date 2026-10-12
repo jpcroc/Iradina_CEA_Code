@@ -57,8 +57,11 @@
 /*************** Adapted from corteo.h ***********************/
 
 /* prime numbers for lists length */
-#define MAXLOGLIST 104729
-#define MAXAZILIST 72211
+//#define MAXLOGLIST 104729
+//#define MAXAZILIST 72211
+//#define MAXRANLIST 1000003
+#define MAXLOGLIST 1000003
+#define MAXAZILIST 1000003
 #define MAXRANLIST 1000003
 
 

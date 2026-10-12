@@ -1162,64 +1162,103 @@ int PrepareStoppingTablesdpass(){
 //****************************************
 //****************************************
 //****************************************
-
 int PrepareStoppingTablesfile(){
-  /* Read stopping data from file and fill arrays etc. */
-  /* material version */
-  int i,j,k,l,Zc;
-  int result;
-  double sep,energ;
-  //  char StoppingFileName[1000];
+  /* Lecture des tables de pouvoir d'arrêt électronique dans ./elstop.in
+     Format, répété autant de fois que nécessaire :
+       imat Z
+       NV
+       E_1  S_1
+       ...
+       E_NV S_NV
+     Seuls les couples (imat, Z) présents dans le fichier sont remplis ;
+     StoppingFileRead[Z] indique pour chaque matériau si la table existe.
+     Les tableaux sont toujours alloués, même sans fichier : tous les
+     drapeaux valent alors false.
+     Retour : 0 = OK, 1 = erreur de lecture/format, 2 = fichier absent,
+              -1 = erreur d'allocation */
+  int i, Z, imat, NV, ie, nread;
+  FILE *felstop;
 
-  //  float fltTemp[DIMD+1];
+  /* Tableaux indexés par Z : pointeurs à NULL, NL à 0, drapeaux à false */
+  for (i = 0; i < NumberOfMaterials; i++) {
+    ListOfMaterials[i].StoppingZEfile   = calloc(MAX_ELEMENT_NO, sizeof(float*));
+    ListOfMaterials[i].Efile            = calloc(MAX_ELEMENT_NO, sizeof(float*));
+    ListOfMaterials[i].StoppingNLfile   = calloc(MAX_ELEMENT_NO, sizeof(int));
+    ListOfMaterials[i].StoppingFileRead = calloc(MAX_ELEMENT_NO, sizeof(bool));
+    if (ListOfMaterials[i].StoppingZEfile   == NULL ||
+        ListOfMaterials[i].Efile            == NULL ||
+        ListOfMaterials[i].StoppingNLfile   == NULL ||
+        ListOfMaterials[i].StoppingFileRead == NULL) {
+      return -1;
+    }
+  }
 
-  FILE *felstop = fopen("./elstop.in", "rb");
-  int NL;    
-  
-  /* Go through materials and create stopping tables for all existing elements */
-  for(i=0;i<NumberOfMaterials;i++){
-    ListOfMaterials[i].StoppingZEfile=(float**)malloc(sizeof(float*)*MAX_ELEMENT_NO); /* pointers to stopping arrays */
-ListOfMaterials[i].StoppingNLfile = calloc(MAX_ELEMENT_NO, sizeof(int*));
-    ListOfMaterials[i].Efile=(float**)malloc(sizeof(float*)*MAX_ELEMENT_NO); /* pointers to stopping arrays */
-    if(ListOfMaterials[i].StoppingZEfile==NULL){return -1;}
-    if(ListOfMaterials[i].Efile==NULL){return -1;}
-    /* Go through possible elements which might be slowed down in this materials */
-    for(j=0;j<=ZMAXdpass;j++){ /* Goes through all possible projectiles */
-      if(existing_elements[j]==1){ /* ok, element might occur, calculate */
-	
-	if (fscanf(felstop, "%d", &NL) != 1) {
-	  printf("Erreur lecture NL\n");
-	  fclose(felstop);
-	  return 1;
-	}
-	
-	ListOfMaterials[i].StoppingZEfile[j]=(float*)calloc(NL,sizeof(float));
-	ListOfMaterials[i].Efile[j]=(float*)calloc(NL,sizeof(float));
-	if(ListOfMaterials[i].StoppingZEfile[j]==NULL){return -1;}
-	ListOfMaterials[i].StoppingNLfile[j]=NL ;
+  felstop = fopen("./elstop.in", "r");
+  if (felstop == NULL) {
+    //    printf("elstop.in does not exist\n");
+    return 0;   /* pas de fichier : tous les drapeaux restent à false */
+  }
+    printf("elstop.in EXISTS. Some stopping powers are READ !\n");
+  /* Lecture bloc par bloc jusqu'à la fin du fichier */
+  while ((nread = fscanf(felstop, "%d %d", &imat, &Z)) == 2) {
 
-	for (int ie = 0; ie < NL; ie++) {
-	  if (fscanf(felstop, "%f %f", &	ListOfMaterials[i].Efile[j][ie],&   ListOfMaterials[i].StoppingZEfile[j][ie]) != 2) {
-            printf("Erreur lecture ligne %d\n", i);
-            fclose(felstop);
-            return 1;
-	  }
-	}
+    if (imat < 0 || imat >= NumberOfMaterials) {
+      printf("elstop.in : indice de matériau %d invalide\n", imat);
+      goto erreur;
+    }
+    if (Z < 0 || Z >= MAX_ELEMENT_NO) {
+      printf("elstop.in : Z = %d invalide (matériau %d)\n", Z, imat);
+      goto erreur;
+    }
+    if (ListOfMaterials[imat].StoppingFileRead[Z]) {
+      printf("elstop.in : table en double pour matériau %d, Z = %d\n", imat, Z);
+      goto erreur;
+    }
+    if (fscanf(felstop, "%d", &NV) != 1 || NV <= 0) {
+      printf("elstop.in : NV invalide pour matériau %d, Z = %d\n", imat, Z);
+      goto erreur;
+    }
 
+    ListOfMaterials[imat].Efile[Z]          = calloc(NV, sizeof(float));
+    ListOfMaterials[imat].StoppingZEfile[Z] = calloc(NV, sizeof(float));
+    if (ListOfMaterials[imat].Efile[Z] == NULL ||
+        ListOfMaterials[imat].StoppingZEfile[Z] == NULL) {
+      fclose(felstop);
+      return -1;
+    }
 
+    for (ie = 0; ie < NV; ie++) {
+      if (fscanf(felstop, "%f %f",
+                 &ListOfMaterials[imat].Efile[Z][ie],
+                 &ListOfMaterials[imat].StoppingZEfile[Z][ie]) != 2) {
+        printf("elstop.in : erreur lecture point %d (matériau %d, Z = %d)\n",
+               ie + 1, imat, Z);
+        goto erreur;
+      }
+      /* Énergies strictement croissantes : détecte un NV incorrect */
+      if (ie > 0 && ListOfMaterials[imat].Efile[Z][ie] <=
+                    ListOfMaterials[imat].Efile[Z][ie-1]) {
+        printf("elstop.in : énergies non croissantes au point %d "
+               "(matériau %d, Z = %d) : NV incorrect ?\n", ie + 1, imat, Z);
+        goto erreur;
+      }
+    }
 
-	for (int ie = 0; ie < NL; ie++) {
-	  printf("%f %f\n", ListOfMaterials[i].Efile[j][ie],&   ListOfMaterials[i].StoppingZEfile[j][ie]);
-	}
-	
-	
-	
-      }/* End of loop through actual  projectile elements */
-    } /* End of loop through possible projectile elements */
-  } /* End of loop through target materials */
+    ListOfMaterials[imat].StoppingNLfile[Z]   = NV;
+    ListOfMaterials[imat].StoppingFileRead[Z] = true;   /* table complète lue */
+  }
+
+  if (nread != EOF) {   /* en-tête "imat Z" mal formé */
+    printf("elstop.in : en-tête de bloc illisible\n");
+    goto erreur;
+  }
+
   fclose(felstop);
-
   return 0;
+
+ erreur:
+  fclose(felstop);
+  return 1;
 }
 
 //****************************************

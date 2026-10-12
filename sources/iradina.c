@@ -16,6 +16,17 @@
     You should have received a copy of the GNU General Public License
     along with iradina.  If not, see <http://www.gnu.org/licenses/>.
 
+     This code was originally developped by Christian Borschel and Carsten Ronning from Jena University (Germany)
+
+     Modifications and additions by  Jean-Paul Crocombette, CEA Saclay for:
+     1/modified Kinnchin-Pease calculation of damage and free flight path approximation,
+	to allow comparison with SRIM.
+	They  are indicated by "CROC" comments
+     2/Addditionnal electronic stopping power calculations :
+       DPASS Se calculations
+       SRIM 2012 and TRIM 1998 Se calcualtions. These routines were extracted from the SRIM executables and rebuilt using  Anthropic-Claude 
+       tabulated stopping powers ca also be read from the an elstop.in file.
+
 ***********************************************************************/
 
 

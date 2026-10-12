@@ -156,34 +156,25 @@ int InitializeMaterials(char* Filename){
     /* Load stopping tables for electronic stopping for all possible elements in all materials */
     //    printf("STOPPINGMODEL: %d\n", stopping_model);
     result=PrepareStoppingTables();
-    switch (stopping_model) {
-        case 0:
-
-	  break;
-      case 1:
-	result=PrepareStoppingTablesdpass();
-	break;
-      case 3: /* SRIM 2012 */
-      case 4: /* SRIM 2008 */
-      case 5: /* TRIM 1998 */
-	result=PrepareStoppingTablesSRIM(stopping_model);
-	break;
-      case 2:
-      if (flag==1){
+    if (flag==1){
       existing_elements[1]=0;    /* hydrogen stopping is needed to calculate charge state */
-      }
-      result=PrepareStoppingTablesfile();
-      if(result!=0){
-	message_error(result,"Cannot create FILE  stopping tables!\n");
-	return result;
-      }
-      existing_elements[1]=1;    /* hydrogen stopping is needed to calculate charge state */
+    }
+    result=PrepareStoppingTablesfile();
+    existing_elements[1]=1;    /* hydrogen stopping is needed to calculate charge state */
+    switch (stopping_model) {
+    case 0:
       break;
-    
-
-      default:
-	printf("wong electronic stopping_model\n");
-	exit(1);
+    case 1:
+      result=PrepareStoppingTablesdpass();
+      break;
+    case 3: /* SRIM 2012 */
+    case 4: /* SRIM 2008 */
+    case 5: /* TRIM 1998 */
+      result=PrepareStoppingTablesSRIM(stopping_model);
+      break;
+    default:
+      printf("wong electronic stopping_model\n");
+      exit(1);
   }
 
 

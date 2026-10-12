@@ -606,6 +606,11 @@ int ConfigFileDataReader(char* ParName, char* ParValue){
 		message(1,"Stopping model is:\t\t %i\n",stopping_model);
 	}
 
+	if(strcmp(ParName,"random_model")==0){ /* ... */
+		sscanf(ParValue,"%i",&random_model);
+		message(1,"Random model is:\t\t %i\n",random_model);
+	}
+
 	if(strcmp(ParName,"flight_length_type")==0){ /* ... */
 		sscanf(ParValue,"%i",&flight_length_type);
 		message(1,"Flight length distribution model:%i\n",flight_length_type);

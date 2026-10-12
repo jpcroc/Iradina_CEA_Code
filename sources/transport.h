@@ -33,11 +33,12 @@
 #ifndef TRANSPORT_H
 #define TRANSPORT_H
 
+
 #include <stdio.h>
 #include <math.h>
 #include <time.h>
 /* #include <unistd.h> */
-
+#include <stdlib.h>
 #include "fileio.h"
 #include "utils.h"
 #include "iradina.h"
@@ -137,7 +138,8 @@ FILE* store_PKA_fp;        /* pointer to file for storing PKAs */
 
 float chu_values[98][4];   /* Values to calculate stragling according to Chu's model; fit data from Yang et al. NIMB61(1991)149. */
 int straggling_model;      /* how to calc straggling */
-int stopping_model;      /* how to calc stopping (1=SRIM; 2=DPASS ; 3=READ table) */
+int stopping_model;      /* how to calc stopping (1=SRIM08/CORTEO; 2=DPASS ; 3=SRIM 2012 ; 5 TRIM 1998) */
+int random_model;      /* how to draw radndom numbers(0= original (with tables), 1 random C intrinsic) */
 
 int max_annular_coll_volumes;  /* According to W.Eckstein "Computer Simulation if Ion-Solid Interactions",
 				  Springer 1991, p.93, multiple collisions in annular volumes should be allowed

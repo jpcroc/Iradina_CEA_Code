@@ -26,7 +26,7 @@
 
 #ifndef TARGET_H
 #define TARGET_H
-
+#include <stdbool.h>
 #include <stdio.h>
 #include <math.h>
 
@@ -106,7 +106,7 @@ struct material                             /* all properties of a material */
 	struct transmitted_ion** ElementalLeavingRecoils; /* Arrays storing recoils that are leaving of each element */
   int *leaving_recoils_pointer;      /* Array of pointers which for each element of this material point to next free leaving position */
   int*  StoppingNLfile ;
-  //    bool  *StoppingFileRead;   /* true if the electronic table is read for the Z in this material is read in elstop.in (default calculation = all false */
+      bool  *StoppingFileRead;   /* true if the electronic table is read for the Z in this material is read in elstop.in (default calculation = all false */
 };
 struct material ListOfMaterials[MAX_NO_MATERIALS];
 int NumberOfMaterials;               /* Points to first free index in the ListOfMaterials */
