@@ -40,7 +40,22 @@
 //#define MONITOR_ION 1000000000000
 
 #include "transport.h"
+#ifdef _WIN32
+/* drand48/srand48 absents sous Windows : implémentation identique à POSIX
+   (générateur congruentiel 48 bits, mêmes constantes, même séquence) */
+static unsigned long long rand48_state = 0x1234ABCD330EULL;
 
+static void srand48(long seed)
+{
+    rand48_state = (((unsigned long long)(unsigned long)seed) << 16) | 0x330EULL;
+}
+
+static double drand48(void)
+{
+    rand48_state = (0x5DEECE66DULL * rand48_state + 0xBULL) & ((1ULL << 48) - 1);
+    return (double)rand48_state / (double)(1ULL << 48);   /* dans [0, 1) */
+}
+#endif
 /* Returns 1 if a stopping table was read in elstop.in for projectile Z in the given material */
 static inline int HasFileStopping(int Z, int material){
   bool *flags = ListOfMaterials[material].StoppingFileRead;
@@ -783,7 +798,7 @@ int FastProjectileTransport(int ProjZ, float ProjM, double ProjE, float Proj_x, 
 	  recoil_energy = energy * ScatMatrix->kfactor_m * sin2thetaby2;
 	  if (simulation_type==7  ){
 	    totlE+=recoil_energy;
-	    return;
+	    return -110 ;
 	  }
 		
 	  energy       -= recoil_energy;
