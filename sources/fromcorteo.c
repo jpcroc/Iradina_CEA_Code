@@ -142,8 +142,9 @@ void computelists() {
 
 	/* produce a list of MAXLOGLIST sqrt(-log(x)) values for x uniformly distributed */
 	/* ...between x=.5/MAXLOGLIST and x=1-.5/MAXLOGLIST */
-	for(iloglist=0; iloglist<MAXLOGLIST; iloglist++)
-	sqrtloglist[iloglist] = sqrtdf(-log((iloglist+.5)/MAXLOGLIST));
+	for(iloglist=0; iloglist<MAXLOGLIST; iloglist++){
+	  sqrtloglist[iloglist] = sqrtdf(-log((iloglist+.5)/MAXLOGLIST));
+	  }
 	randomizelist(sqrtloglist, MAXLOGLIST); /* put the list in random order */
 	/* precompute 1/sqrtloglist[] */
 	for(iloglist=0; iloglist<MAXLOGLIST; iloglist++)

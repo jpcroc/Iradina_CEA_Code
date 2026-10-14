@@ -39,6 +39,8 @@ int main(int argc, char* argv[]){
 	message_buffer=(char*)malloc(4096*sizeof(char)); /* buffer for printout of messages */
 
 	/* Init some default values for some global variables */
+	stopping_model         = 0;
+	random_model           = 1;
 	print_level            = 0;
 	wait_before_end        = 0;
 	mem_usage_only         = 0;

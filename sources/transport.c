@@ -61,6 +61,7 @@ int IrradiateTarget(){
   float x,y,z,energy;
   int   i;    /* count ions */
   x=0.0;   y=0.0;   z=0.0;
+  srand48((long) time(NULL));   /* initialisation, une seule fois */
 
   sim_start_time=time(NULL);
 
@@ -399,6 +400,7 @@ int FastProjectileTransport(int ProjZ, float ProjM, double ProjE, float Proj_x, 
   float randomSRIM;                      /* CROC  */
   float   e_d, g_ed, E_v,  E_div,k_dr;   /* CROC : SRIM variables for free flight path*/
   float xsi ,pmax=.1,bmax ;              /* 7.40-7.41 page 7-16 */
+  double sqrn,sqlodr,sqloli1;
   /* pmax requires to be initialized in case the starting cell contains no material */
 
   /* init values */
@@ -471,7 +473,18 @@ int FastProjectileTransport(int ProjZ, float ProjM, double ProjE, float Proj_x, 
       case 0: /* Poisson distributed flight length and impact pars */
 	/* Flight length between collisions: Poisson-distributed value with interatomic spacing as mean free path */
 	/* flightpath = -current_material->AtomicDistance * log(randomx()); */
-	temp1= sqrtloglist[iranloglist]*current_material->SqrtAtomicDistance; /* Use of random list faster (as in corteo)*/
+	switch (random_model){
+	  case 0:
+	    temp1= sqrtloglist[iranloglist]*current_material->SqrtAtomicDistance; /* Use of random list faster (as in corteo)*/
+	    //	    printf("tem1 %g \n", temp1);
+	    break;
+	  case 1:
+	    sqlodr = sqrtdf(-log(1.0 - drand48()));   /* argument dans (0, 1] : jamais log(0)*/
+	    temp1=sqlodr*current_material->SqrtAtomicDistance; /* Use of random list faster (as in corteo)*/;
+	    //	    printf("tem1 %g \n", temp1);
+	    break;
+	  }
+
 	flightpath=temp1*temp1;
 	break;
       case 1: /* atomic spacing */
@@ -658,8 +671,16 @@ int FastProjectileTransport(int ProjZ, float ProjM, double ProjE, float Proj_x, 
 	proj_eq_target=0; /* Assume at first, that projectile is not the same as target */
 
 	/* Randomly select collision target according to concentration: */
-	if(iranlist>=MAXRANLIST-2)iranlist = 0;
-	random   = randomlist[(iranlist)++]; /* A list of precalculated random values is used like in corteo */
+	switch (random_model){
+	  case 0:
+	    if(iranlist>=MAXRANLIST-2)iranlist = 0;
+	    random   = randomlist[(iranlist)++]; /* A list of precalculated random values is used like in corteo */
+	    break;
+	  case 1:
+	    random=  drand48();
+	    break;
+	  }
+
 	conc_sum = 0;
 
 	for(i=0;i<current_material->ElementCount;i++){    /* go through elements in material... */
@@ -687,15 +708,46 @@ int FastProjectileTransport(int ProjZ, float ProjM, double ProjE, float Proj_x, 
 	/* Select impact parameter (this depends also on the flight lengths used): */
 	switch(flight_length_type){
 	case 0: /* Poisson distributed flight length and impact pars */
-	  impact_par = sqrtrandomlist[(iranlist)++] * current_material->MeanImpactPar * sqrtloglist1[iranloglist];
-	  /* Note: the irandomlist pointer is already checked and set back to 0 at the selection of collision partner */
-	  if(++iranloglist>=MAXLOGLIST) iranloglist=0;
-	  break;
+	  switch (random_model){
+	  case 0:
+	    sqloli1=sqrtloglist1[iranloglist];
+	    impact_par = sqrtrandomlist[(iranlist)++] * current_material->MeanImpactPar * sqloli1;
+	    //	    printf("sqloli1 %g \n", sqloli1);
+	    /* Note: the irandomlist pointer is already checked and set back to 0 at the selection of collision partner */
+	    if(++iranloglist>=MAXLOGLIST) iranloglist=0;
+	    break;
+	  case 1:
+	    sqrn=  sqrt(drand48());
+	    sqloli1=1/sqlodr;
+	    impact_par = sqrn * current_material->MeanImpactPar *sqloli1;
+	    //	    printf("sqlo %g \n", sqloli1);
+	    break;
+	  }
 	case 1: /* atomic spacing */
+	  switch (random_model){
+	  case 0:
 	  impact_par = sqrtrandomlist[(iranlist)++] * current_material->MeanImpactPar; /* without the log list! */
+	    /* Note: the irandomlist pointer is already checked and set back to 0 at the selection of collision partner */
+	    if(++iranloglist>=MAXLOGLIST) iranloglist=0;
+	    break;
+	  case 1:
+	    sqrn=  sqrt(drand48());
+	    impact_par = sqrn * current_material->MeanImpactPar; /* without the log list! */
+	    break;
+	  }
 	  break;
 	case 2: /* constant */
-	  impact_par = sqrtrandomlist[(iranlist)++] * current_material->SqrtRecFlDensity; /* without the log list! */
+	  switch (random_model){
+	  case 0:
+	    impact_par = sqrtrandomlist[(iranlist)++] * current_material->SqrtRecFlDensity; /* without the log list! */
+	    /* Note: the irandomlist pointer is already checked and set back to 0 at the selection of collision partner */
+	    break;
+	  case 1:
+	    sqrn=  sqrt(drand48());
+	    impact_par = sqrn* current_material->SqrtRecFlDensity; /* without the log list! */
+	    break;
+	  }
+
 	  break;
 	case 3: /*CROC SRIMlike */
 	  randomSRIM=d2f(randomx());  /* Attention! Using random tables does not seem to be "sufficiently" random for large ion numbers in der KP case! --> randomx() is better here to get better statistics! */
@@ -1604,7 +1656,7 @@ int FullProjectileTransport(int ProjZ, float ProjM, double ProjE, float Proj_x, 
 
 	  /* select randomly between 0 and max (or higher, as disucssed in Eckstein's book) */
 	  impact_par = (sqrtf(coll_counter) + sqrtrandomlist[(iranlist)++] * sqrtf(coll_counter+1)) * max_impact_par;
-	  if(iranlist>=MAXRANLIST-2) iranlist = 0;  /* Make sure index pointer is ok */
+	  if(iranlist>=MAXRANLIST-2) iranlist = 0;  /* Make sure index pointer is ok
 
 #ifdef DEBUG_MODE
 	  message_debug(__FILE__,__LINE__,"ip: %g, max ip: %g\n",impact_par,max_impact_par);
