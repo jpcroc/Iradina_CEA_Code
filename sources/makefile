@@ -7,14 +7,15 @@
 #select compiler by OS:
 #OS := $(shell uname -s)
 #ifeq ($(OS),Linux)
-  CC=gcc
+  CC=gcc 
 #else
 #assume windows:
 #  CC=x86_64-w64-mingw32-gcc
 #endif
 
 # Add -m32 for 32 bit compilation on 64 bit systems:
-CFLAGS = -O1 -Wall -fcommon
+#CFLAGS = -g -O0 -Wall -fcommon
+CFLAGS = -O1 -Wall -fcommon	
 LDFLAGS = -lm
 
 ########################################
@@ -39,7 +40,7 @@ LDFLAGS = -lm
 ########################################
 
 iradina : iradina.o target.o fileio.o utils.o transport.o geometry.o fromcorteo.o stopping_srim.o
-	$(CC) -o iradina iradina.o target.o fileio.o utils.o transport.o geometry.o fromcorteo.o stopping_srim.o $(LDFLAGS)
+	$(CC) $(CFLAGS) -o iradina iradina.o target.o fileio.o utils.o transport.o geometry.o fromcorteo.o stopping_srim.o $(LDFLAGS)
 
 utils.o: utils.h utils.c
 

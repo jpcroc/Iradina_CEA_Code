@@ -411,9 +411,9 @@ int FastProjectileTransport(int ProjZ, float ProjM, double ProjE, float Proj_x, 
 					    inaccuracies in rotation fct. */
   /*  int multi_col_counter; */          /* To allow multiple collisions as suggested in Eckstein, p. 92 */
   int isvac;                             /* is 1 if vacuum */
-  float epsil;                           /* CROC SRIMepsillon*/
-  float randomSRIM;                      /* CROC  */
-  float   e_d, g_ed, E_v,  E_div,k_dr;   /* CROC : SRIM variables for free flight path*/
+  float epsil=0;                           /* CROC SRIMepsillon*/
+  float randomSRIM=0;                      /* CROC  */
+  float   e_d, g_ed=0, E_v,  E_div=0,k_dr;   /* CROC : SRIM variables for free flight path*/
   float xsi ,pmax=.1,bmax ;              /* 7.40-7.41 page 7-16 */
   double sqrn,sqlodr,sqloli1;
   /* pmax requires to be initialized in case the starting cell contains no material */
@@ -736,8 +736,8 @@ int FastProjectileTransport(int ProjZ, float ProjM, double ProjE, float Proj_x, 
 	    sqloli1=1/sqlodr;
 	    impact_par = sqrn * current_material->MeanImpactPar *sqloli1;
 	    //	    printf("sqlo %g \n", sqloli1);
-	    break;
-	  }
+	    break;}
+	  break;
 	case 1: /* atomic spacing */
 	  switch (random_model){
 	  case 0:
@@ -802,6 +802,7 @@ int FastProjectileTransport(int ProjZ, float ProjM, double ProjE, float Proj_x, 
 	  }
 		
 	  energy       -= recoil_energy;
+	  if (energy < 0.0) energy = 0.0;   
 	  /*if one follows only the ion this energy loss should be attributed to phonons, i.e. ballistic losses*/
 	  if(simulation_type==3){	  
 	    if(store_energy_deposit==1){TargetEnergyPhonons[cell_i]+=(double)recoil_energy;} /* Energy goes to ballistic losses */
@@ -821,7 +822,7 @@ int FastProjectileTransport(int ProjZ, float ProjM, double ProjE, float Proj_x, 
 	  /* after many collisions, the velocity starts to deviate from 1, because of the limited accuracy of floats. We might therefore correct it */
 #ifdef RENORM_VELOCITIES
 	  vel=vx*vx+vy*vy+vz*vz;
-	  if(fabs(vel-1.9)>0.01){
+	  if(fabs(vel-1.0)>0.01){
 	    svel=1.0/sqrtf(vel);
 	    vx*=svel;vy*=svel;vz*=svel;
 	  }
