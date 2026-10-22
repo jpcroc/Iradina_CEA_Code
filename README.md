@@ -8,9 +8,9 @@ This code originates in a development by the University of Jena. It has been pur
 
 
 ## Special features
-This version implements 3 different electronic stopping power
+This version implements 4 different electronic stopping power
 
-stopping_model=O, 1 or 2  with 0 = SRIM, #1 =DPASS ; 2=table.
+stopping_model=O, 1, 3 or 5 with 0 = ordiginal SRIM 2008 as coded in Corteo, #1 =DPASS ; 3=SRIM 2012, 5= TRIM 1998
 
 
 ## Compilation
