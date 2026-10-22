@@ -41,9 +41,9 @@ Main variables of Config.in are explained in the file.
 ### stopping_model=1 is DPASS formula (see NIMB 460, 19 (2019). The file DPASS_DB.dat should be in the data directory (see below)
 
 ### elstop.in is read with stopping_model=2.
-The file is built as sequence of blocks, one block per element involved in the calculation, with the target elements then the projectile element, i.e. for Au in SiC, the first blcok is for Si, then C then Au.
+The file is built as sequence of blocks, one block per element for which the stopping power is read. For iother elements stopping_model applies. 
 
-For each block, the first line indicates the number of subsequent lines of data (N). The subsequent N lines then give in energy in eV and stopping power in ev/nm for this element in the present target.
+For each block, the first line indicates the index of the element in the calculation (0 is the projectile) and Z its atomic numner, then the number of subsequent lines of data (N). The subsequent N lines then give in energy in eV and stopping power in ev/nm for this element in the present target.
 
 This file has to be built or obtained from outside iradina. It must be in the working directory, not in data/ (as it is very case specific).
 
