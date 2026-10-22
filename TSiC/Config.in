@@ -16,9 +16,10 @@ simulation_type=3
 #3 ion profile only
 #4 QUick calculation/NRT like
 #7 stopping tables
-stopping_model=2  # 0 = SRIM, #1 =DPASS ; 2=table
-#root pf the result files
-OutputFileBaseName=./T2
+random_model=1
+stopping_model=5  # 0 = SRIM08/CORTEO, #1 =DPASS ; 3=SRIM2012; 5=TRIM1998
+#root of the result files
+OutputFileBaseName=./T5
 flight_length_type=0 # 0 random  ; 3 SRIM like
 dpa_output =0 #0 no , 1 yes (dpa calculated from density)
 
