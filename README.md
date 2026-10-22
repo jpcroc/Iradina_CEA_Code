@@ -8,9 +8,7 @@ This code originates in a development by the University of Jena. It has been pur
 
 
 ## Special features
-This version implements 4 different electronic stopping power
-
-stopping_model=O, 1, 3 or 5 with 0 = ordiginal SRIM 2008 as coded in Corteo, #1 =DPASS ; 3=SRIM 2012, 5= TRIM 1998
+This version implements 4 different electronic stopping power (see below)
 
 
 ## Compilation
@@ -36,11 +34,12 @@ Main variables of Config.in are explained in the file.
 
 
 ## electronic stopping
-### stopping_model=0 is SRIM 2008.
 
-### stopping_model=1 is DPASS formula (see NIMB 460, 19 (2019). The file DPASS_DB.dat should be in the data directory (see below)
+stopping_model=O, 1, 3 or 5 with 0 = ordiginal SRIM 2008 as coded in Corteo, #1 =DPASS ; 3=SRIM 2012, 5= TRIM 1998
 
-### elstop.in is read with stopping_model=2.
+stopping_model=1 is DPASS formula (see NIMB 460, 19 (2019). The file DPASS_DB.dat should be in the data directory (see below)
+
+### elstop.in is read whenever it exists. stopping_model must also be specified
 The file is built as sequence of blocks, one block per element for which the stopping power is read. For iother elements stopping_model applies. 
 
 For each block, the first line indicates the index of the element in the calculation (0 is the projectile) and Z its atomic numner, then the number of subsequent lines of data (N). The subsequent N lines then give in energy in eV and stopping power in ev/nm for this element in the present target.
